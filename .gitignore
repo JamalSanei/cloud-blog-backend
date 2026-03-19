@@ -30,7 +30,6 @@ logs
 
 # IDE - VSCode
 .vscode/*
-.qodo/
 
 # dotenv environment variable files
 .env
@@ -44,7 +43,6 @@ logs
 .tmp
 
 # Runtime data
-pids
 *.pid
 *.seed
 *.pid.lock
