@@ -10,6 +10,18 @@ services:
       - SERVICES=s3,sqs
       - DEFAULT_REGION=us-east-1
 
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: blog
+    ports:
+      - "6432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   api:
     build: ./api
     container_name: api
@@ -25,3 +37,6 @@ services:
     container_name: worker
     depends_on:
       - localstack
+
+volumes:
+  pgdata:
