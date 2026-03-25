@@ -1,5 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+export enum BlogState {
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  DONE = 'DONE',
+}
 @Entity()
 export class Blog {
   @PrimaryGeneratedColumn()
@@ -10,4 +15,7 @@ export class Blog {
 
   @Column()
   imageKey: string;
+
+  @Column({ default: BlogState.PENDING })
+  state: BlogState;
 }

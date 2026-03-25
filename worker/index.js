@@ -6,7 +6,7 @@ const {
   DeleteMessageCommand,
 } = require("@aws-sdk/client-sqs");
 
-
+const statusUpdate = require('./status-update')
 
 const queueUrl =
   "http://localstack:4566/000000000000/my-queue";
@@ -38,11 +38,18 @@ async function pollMessages() {
         for (const msg of res.Messages) {
           console.log("Received:", msg.Body);
 
-          const data = JSON.parse(msg.Body);
+          const body = JSON.parse(msg.Body);
+          const { blogId, key } = body
 
-          // simulate processing
-          console.log("Processing:", data.key);
 
+          console.log("Processing:", key);
+
+          await statusUpdate('PROCESSING', blogId)
+
+          // processing duration simulator
+          await new Promise((res) => setTimeout(res, 2000));
+
+          await statusUpdate('DONE', blogId)
 
           await sqs.send(
             new DeleteMessageCommand({

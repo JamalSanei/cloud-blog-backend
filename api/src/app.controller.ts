@@ -36,6 +36,7 @@ export class AppController {
     await this.sqsService.sendMessage({
       key: result.key,
       action: 'PROCESS_IMAGE',
+      blogId: blog.id,
     });
 
     return blog;
